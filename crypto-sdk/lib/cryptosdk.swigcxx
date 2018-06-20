@@ -1,0 +1,38 @@
+/* File : crypto-sdk.swigcxx */
+%module cryptosdk
+
+#define CRYPTO_EXPORT __attribute__((visibility("default")))
+#define CRYPTO_NO_EXPORT __attribute__((visibility("hidden")))
+
+%include <typemaps.i>
+%include "std_string.i"
+%include "std_vector.i"
+
+namespace std {
+   %template(StringVector) vector<string>;
+   %template(ByteVector) vector<char>;
+}
+
+#define __attribute__(x)
+
+%{
+#include "utils.h"
+#include "crypto.h"
+#include "sha256.h"
+#include "sha512.h"
+#include "ed25519key.h"
+#include "ripemd160.h"
+#include "base58.h"
+#include "crc32.h"
+#include "address.h"
+%}
+
+%include "utils.h"
+%include "crypto.h"
+%include "sha256.h"
+%include "sha512.h"
+%include "ed25519key.h"
+%include "ripemd160.h"
+%include "base58.h"
+%include "crc32.h"
+%include "address.h"
