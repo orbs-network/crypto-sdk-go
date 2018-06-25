@@ -1,1 +1,1 @@
-package cryptosdk
+package lib

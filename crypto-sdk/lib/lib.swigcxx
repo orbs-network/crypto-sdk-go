@@ -1,5 +1,5 @@
 /* File : crypto-sdk.swigcxx */
-%module cryptosdk
+%module lib
 
 #define CRYPTO_EXPORT __attribute__((visibility("default")))
 #define CRYPTO_NO_EXPORT __attribute__((visibility("hidden")))
@@ -13,9 +13,11 @@ namespace std {
    %template(ByteVector) vector<char>;
 }
 
+// Won't compile without it
 #define __attribute__(x)
 
 %{
+#include "exports.h"
 #include "utils.h"
 #include "crypto.h"
 #include "sha256.h"
@@ -27,6 +29,7 @@ namespace std {
 #include "address.h"
 %}
 
+%include "exports.h"
 %include "utils.h"
 %include "crypto.h"
 %include "sha256.h"

@@ -1,4 +1,4 @@
-package crypto_sdk_swig_wrapper
+package cryptosdk_wrapper
 
 import (
 	. "github.com/onsi/ginkgo"
