@@ -16,12 +16,19 @@ echo "===> SWIG: Building Go wrapper for C++ code <==="
 
 #export GOOS=linux
 #export GOARCH=amd64
-export CGO_CPPFLAGS="-I${LIBGCYPT_H} -I${LIBGPG_H}"
+# If not Mac, CGO_CPPFLAGS might also need "-std=c++11" flag
+if [[ $(uname) != "Darwin" ]] ; then
+    CPP11FLAG="-std=c++11"
+else
+    CPP11FLAG=""
+fi
+export CGO_CPPFLAGS="${CPP11FLAG} -fPIC -I${LIBGCYPT_H} -I${LIBGPG_H}"
 export CGO_LDFLAGS="-L${LIBGCRYPT_LIB_DIR} -L${LIBGPG_LIB_DIR} -lgcrypt -lgpg-error"
 export CGO_ENABLED=1
 
-#swig -c++ -Wall -go -cgo -intgosize 64 ${CRYPTO_SDK_LIB_DIR}/${CRYPTO_SDK_SWIGFILE}
-#swig -go -cgo -intgosize 64 ${CRYPTO_SDK_LIB_DIR}/${CRYPTO_SDK_SWIGFILE}
+cmd="swig -c++ -Wall -go -cgo -intgosize 64 ${CRYPTO_SDK_LIB_DIR}/${CRYPTO_SDK_SWIGFILE}"
+echo "### ${cmd}"
+#${cmd}
 if [[ $? -ne 0 ]] ; then
     echo "SWIG failed"
     exit 1
@@ -34,7 +41,7 @@ echo "===> Building Go code <==="
 #go build
 echo "===> Build complete, running tests <==="
 
-go test
+go test -x
 echo "===> Tests complete <==="
 cd -
 
