@@ -1,18 +1,18 @@
-#ifndef _MY_PACKAGE_CBASE58_H_
-#define _MY_PACKAGE_CBASE58_H_
+#pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-	typedef void* Base58;
-	void Base58Encode();
-//	Base58 Base58Init(void);
-//	void Base58Free(Foo);
-//	void Base58Encode();
+//#include <string>
+//#include <vector>
 
+//std::string _Base58Encode( std::vector<uint8_t> data);
+//std::vector<uint8_t> _Base58Decode( std::string encoded);
+
+
+//const char* Base58Encode(const char* input);
+//const char* Base58Decode(const char* input);
 #ifdef __cplusplus
 }
-#endif
-
 #endif

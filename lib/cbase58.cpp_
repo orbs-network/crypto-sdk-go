@@ -1,0 +1,46 @@
+#include "cbase58.h"
+#include "base58.h"
+
+const char* Base58Encode(const char* input) {
+    std::vector<uint8_t> v(input, input+strlen(input));
+
+    std::string encoded = _Base58Encode(v);
+//    char *res = reinterpret_cast<char *>(malloc(sizeof(uint8_t) * v.size()));
+    char *res = reinterpret_cast<char *>(malloc(sizeof(uint8_t) * encoded.size()));
+    memcpy(res, encoded.c_str(), sizeof(uint8_t) * encoded.size());
+    return res;
+}
+
+const char* Base58Decode(const char* input) {
+    std::string input_str(input);
+    std::vector<uint8_t> v = _Base58Decode(input_str);
+
+    char *res = reinterpret_cast<char *>(malloc(sizeof(uint8_t) * v.size()));
+    memcpy(res, &v[0], sizeof(uint8_t) * v.size());
+    return res;
+}
+
+ std::string _Base58Encode( std::vector<uint8_t> data) {
+    return Orbs::Base58::Encode(data);
+}
+
+ std::vector<uint8_t> _Base58Decode( std::string encoded) {
+    std::vector<uint8_t> decoded = Orbs::Base58::Decode(encoded);
+    return decoded;
+}
+
+
+//Foo FooInit() {
+//	Base58 * ret = new Base58(1);
+//	return (void*)ret;
+//}
+
+//void FooFree(Foo f) {
+//	Base58 * foo = (Base58*)f;
+//	delete foo;
+//}
+//
+//void FooBar(Foo f) {
+//	Base58 * foo = (Base58*)f;
+//	foo->Bar();
+//}

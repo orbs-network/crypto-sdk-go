@@ -1,16 +1,20 @@
+LDPATH=../native/mac
+INCLUDE_PATH=../native/headers
+RPATH=../native/mac
+CGO_ENABLED=1
+CGO_CXXFLAGS="-std=c++11"
+CGO_CPPFLAGS="-I../native/headers"
+CGO_LDFLAGS="-L. -lcryptosdk -Wl,-rpath,."
+#CGO_LDFLAGS="-L../native/mac -rpath -Wl"
+TARGET=crypto-sdk-go
 
 .PHONY: clean
 
-TARGET=crypto-sdk-go
-
-$(TARGET): ../native/mac/libcryptosdk.dylib
-	go build -x -o main
+$(TARGET):
+	CGO_CPPFLAGS=$(CGO_CPPFLAGS) CGO_LDFLAGS=$(CGO_LDFLAGS) go build -x -o main
 
 %.o: %.cpp
-	clang++ -O2 -o $@ -c $^
-
-example: example.cpp
-	clang++ -O2 -I../native/headers -L../native/mac -lcryptosdk -rpath ../native/mac -o example example.cpp
+	clang++ -O2 -I${INCLUDE_PATH} -L${LDPATH} -lcryptosdk -rpath ${RPATH} -o $@ -c $^
 
 clean:
 	rm -f *.o *.so *.a $(TARGET)
