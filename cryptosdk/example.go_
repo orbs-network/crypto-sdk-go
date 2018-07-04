@@ -6,6 +6,7 @@ import "C"
 import (
 	"fmt"
 	"unsafe"
+	"encoding/hex"
 )
 
 type GoED25519Key struct {
@@ -32,35 +33,39 @@ func (ed GoED25519Key) HasPrivateKey() bool {
 	return C.CED25519KeyHasPrivateKey(ed.inst) == true
 }
 
-func (ed GoED25519Key) GetPublicKey() []byte  {
+func (ed GoED25519Key) GetPublicKey() []byte {
 
 	var len C.int
 	res := unsafe.Pointer(C.CED25519KeyGetPublicKey(ed.inst, &len))
+	fmt.Printf("Res: %T %v len=%d\n", res, res, len)
 	return C.GoBytes(res, len)
 }
 
 func ed25519keyTest() {
 	inst := New()
+	defer inst.Free()
 	fmt.Printf("Instance: %T %v\n", inst, inst)
 	fmt.Printf("Instance has priv key: %v\n", inst.HasPrivateKey())
 	publicKey := inst.GetPublicKey()
+	publicKeyStr := hex.EncodeToString(publicKey)
 	fmt.Printf("Public Key: %T %v\n", publicKey, publicKey)
-	inst.Free()
+	fmt.Printf("Public Key str: %T %v\n", publicKeyStr, publicKeyStr)
+
 }
 
-/*
-func bindC() {
-	input := "Hello world"
-	fmt.Printf("Input: %v\n", input)
-	cstr := C.CString(input)
-	encodeRes := C.Base58Encode(cstr)
-	encodedStr := C.GoString(encodeRes)
-	fmt.Printf("Encoded: %v\n", encodedStr)
-	decodeRes := C.Base58Decode(C.CString(encodedStr))
-	decodeStr := C.GoString(decodeRes)
-	fmt.Printf("Decoded: %v\n", decodeStr)
-}
-*/
+
+//func bindC() {
+//	input := "Hello world"
+//	fmt.Printf("Input: %v\n", input)
+//	cstr := C.CString(input)
+//	encodeRes := C.Base58Encode(cstr)
+//	encodedStr := C.GoString(encodeRes)
+//	fmt.Printf("Encoded: %v\n", encodedStr)
+//	decodeRes := C.Base58Decode(C.CString(encodedStr))
+//	decodeStr := C.GoString(decodeRes)
+//	fmt.Printf("Decoded: %v\n", decodeStr)
+//}
+
 //func bindCpp()  {
 //	input := "Hello world"
 //	fmt.Printf("Input: %v\n", input)
