@@ -3,17 +3,20 @@ package cryptosdk_test
 import (
 	"github.com/orbs-network/crypto-sdk-go/cryptosdk"
 	"fmt"
-	"encoding/hex"
 	"testing"
 )
 
-func TestEd25519key(t *testing.T) {
-	inst := cryptosdk.ED25519KeyNew()
-	defer inst.ED25519KeyFree()
-	fmt.Printf("Instance: %T %v\n", inst, inst)
-	fmt.Printf("Instance has priv key: %v\n", inst.ED25519KeyHasPrivateKey())
-	publicKey := inst.ED25519KeyGetPublicKey()
-	publicKeyStr := hex.EncodeToString(publicKey)
-	fmt.Printf("Public Key: %T %v\n", publicKey, publicKey)
-	fmt.Printf("Public Key str: %T %v\n", publicKeyStr, publicKeyStr)
+func TestBase58(t *testing.T) {
+	fmt.Println("===> TestBase58 <===")
+	plaintext := "Hello I am a string!"
+	encoded := cryptosdk.Base58Encode([]byte(plaintext), len(plaintext))
+	fmt.Printf("Encoded: %T %v\n", encoded, encoded)
+	decoded := cryptosdk.Base58Decode(encoded)
+	decodedStr := string(decoded)
+	fmt.Printf("Decoded: %T %v\n", decodedStr, decodedStr)
+
+	if plaintext != decodedStr {
+		t.Errorf("Plaintext and decoded strings are different: Plaintext=%v Decoded=%v", plaintext, decodedStr)
+	}
+
 }

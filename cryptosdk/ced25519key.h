@@ -1,6 +1,4 @@
-#ifndef _MY_PACKAGE_CED25519KEY_H_
-#define _MY_PACKAGE_CED25519KEY_H_
-
+#pragma once
 #include <stdbool.h>
 
 #ifdef __cplusplus
@@ -14,6 +12,4 @@ extern "C" {
 
 #ifdef __cplusplus
 }
-#endif
-
 #endif
