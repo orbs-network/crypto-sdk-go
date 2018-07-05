@@ -8,7 +8,7 @@ extern "C" {
 	CED25519Key CED25519KeyInit(void);
 	void CED25519KeyFree(CED25519Key);
 	bool CED25519KeyHasPrivateKey(CED25519Key);
-	const char* CED25519KeyGetPublicKey(CED25519Key, int *len);
+	const char* CED25519KeyGetPublicKey(CED25519Key instance, char* buf, int* len);
 
 #ifdef __cplusplus
 }

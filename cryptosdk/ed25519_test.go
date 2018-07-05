@@ -7,14 +7,15 @@ import (
 	"testing"
 )
 
+// This is just a POC, it still doesn't actually test anything
 func TestEd25519key(t *testing.T) {
 	fmt.Println("===> TestEd25519key <===")
-	inst := cryptosdk.ED25519KeyNew()
-	defer inst.ED25519KeyFree()
-	fmt.Printf("Instance: %T %v\n", inst, inst)
-	fmt.Printf("Instance has priv key: %v\n", inst.ED25519KeyHasPrivateKey())
-	publicKey := inst.ED25519KeyGetPublicKey()
-	publicKeyStr := hex.EncodeToString(publicKey)
-	fmt.Printf("Public Key: %T %v\n", publicKey, publicKey)
-	fmt.Printf("Public Key str: %T %v\n", publicKeyStr, publicKeyStr)
+
+	ed25519Key := cryptosdk.ED25519KeyNew()
+	defer ed25519Key.ED25519KeyFree()
+	publicKey := hex.EncodeToString(ed25519Key.GetPublicKey())
+	hasPrivateKey := ed25519Key.HasPrivateKey()
+
+	fmt.Printf("Public Key: %v\n", publicKey)
+	fmt.Printf("Instance has priv key: %v\n", hasPrivateKey)
 }

@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// This is just a POC, it still doesn't actually test anything
 func TestBase58(t *testing.T) {
 	fmt.Println("===> TestBase58 <===")
 	plaintext := "Hello I am a string!"
